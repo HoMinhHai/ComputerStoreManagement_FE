@@ -1,0 +1,70 @@
+.menu-container {
+    width: 100%;
+    margin: 0;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    height: 50px;
+    background-color: black;
+
+
+    .main-menu-btn {
+        text-align: center;
+        background-color: #2e5fff;
+        color: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 270px;
+        height: auto;
+        margin-right: 200px;
+
+
+    }
+
+
+
+
+    .group-options {
+
+        display: flex;
+        width: 800px;
+        align-items: center;
+        justify-content: space-around;
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+
+    }
+}
+
+.sub-menu {
+    position: absolute;
+    top: 70px;
+
+    left: 20px;
+    background-color: #fff6de;
+    width: 270px;
+    height: auto;
+
+
+    ul {
+        list-style-type: none;
+        width: 100%;
+        padding: 0;
+
+        li {
+            height: 50px;
+            padding: 15px 0px 15px 40px;
+        }
+
+        li:hover {
+            background-color: #ecf0f1;
+        }
+    }
+}

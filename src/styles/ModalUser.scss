@@ -1,0 +1,30 @@
+.modal-dialog {
+    max-width: 800px;
+
+    .modal-header {
+        background-color: white !important;
+
+        h5 {
+            color: black;
+        }
+
+        .close {
+            background-color: white;
+            color: black;
+            height: 100%;
+
+            width: auto;
+            margin-right: 0 !important;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .modal-footer {
+        justify-content: center;
+
+        button {
+            width: 300px;
+        }
+    }
+}
