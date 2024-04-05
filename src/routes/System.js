@@ -9,7 +9,7 @@ class System extends Component {
     render() {
         const { systemMenuPath } = this.props;
         return (
-            <div className="system-container">
+            <div className="system-container" >
                 <div className="system-list">
                     <Switch>
                         <Route path="/system/user-manage" component={UserManage} />
@@ -18,7 +18,7 @@ class System extends Component {
                         <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                     </Switch>
                 </div>
-            </div>
+            </div >
         );
     }
 }

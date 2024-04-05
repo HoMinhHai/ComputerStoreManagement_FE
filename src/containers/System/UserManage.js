@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import '../../styles/UserManage.scss'
-import { getAllUsers, createNewUser } from '../../services/userService';
+import { getAllUsers, createNewUser, deleteUser } from '../../services/userService';
 import Modal from './ModalUser'
+import { emitter } from '../../utils/emitter';
 class UserManage extends Component {
 
     constructor(props) {
@@ -34,6 +35,7 @@ class UserManage extends Component {
             await createNewUser(data);
             this.getAllUsers();
             this.toggleUserModal();
+            emitter.emit('EVENT_CLEAR_MODAL_DATA', { 'id': 'your id' })
         }
         catch (e) {
             alert("Email already exists")
@@ -44,19 +46,31 @@ class UserManage extends Component {
             OpenCloseModal: !this.state.OpenCloseModal
         })
     }
+    handleDeleteUser = async (id) => {
+        let res = await deleteUser(id);
+        if (res && res.errCode === 0) {
+            alert("Deleted succesfully");
+            await this.getAllUsers();
+
+        }
+        else
+            alert("Can not delete this user");
+
+    }
     render() {
         let listUser = this.state.listUser;
         return (
-            <>
+            <Fragment>
                 <Modal OpenCloseModal={this.state.OpenCloseModal}
                     toggleUserModal={this.toggleUserModal}
                     size="lg"
-                    createNewUser={this.createNewUser}
-                />
+                    createNewUser={this.createNewUser} />
+
                 <div className='container-user-manage'>
                     <div className='text-center'>User Manage</div>
                     <button className='btn-new'
-                        onClick={() => this.handleAddNewUser()}>Create a new user</button>
+                        onClick={() => this.handleAddNewUser()}>Create a new user
+                    </button>
 
                     <table id="customers">
                         <thead>
@@ -80,7 +94,10 @@ class UserManage extends Component {
 
                                             <td>
                                                 <button className='btn-edit'><i className="fas fa-pencil-alt"></i></button>
-                                                <button className='btn-delete'><i className="fas fa-trash-alt"></i></button>
+                                                <button className='btn-delete'
+                                                    onClick={() => this.handleDeleteUser(item.id)}>
+                                                    <i className="fas fa-trash-alt"></i>
+                                                </button>
                                             </td>
                                         </tr>
 
@@ -91,7 +108,7 @@ class UserManage extends Component {
 
                     </table>
                 </div>
-            </>
+            </Fragment>
 
 
 

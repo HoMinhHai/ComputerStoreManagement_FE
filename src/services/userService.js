@@ -7,6 +7,12 @@ const getAllCategories = async () => {
 const getAllUsers = async (id) => {
     return await axios.get(`/api/getInfoUser?id=${id}`);
 }
+
+const deleteUser = (userId) => {
+    return axios.delete('/api/delete-user', {
+        data: { id: userId }
+    })
+}
 const getAllProducts = async () => {
     return await axios.get('/getAllProducts')
 }
@@ -24,5 +30,5 @@ const createNewUser = (data) => {
 }
 export {
     getAllCategories, getAllProducts, get10NewestProduct, get10BestSelling,
-    get10Promotion, getAllUsers, createNewUser
+    get10Promotion, getAllUsers, createNewUser, deleteUser
 }

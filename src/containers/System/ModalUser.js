@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import '../../styles/ModalUser.scss'
+import { emitter } from '../../utils/emitter';
 class ModalUser extends Component {
 
     constructor(props) {
@@ -14,8 +15,19 @@ class ModalUser extends Component {
             LastName: '',
             Address: '',
         }
+        this.listenToEmitter()
     }
-
+    listenToEmitter() {
+        emitter.on('EVENT_CLEAR_MODAL_DATA', data => {
+            this.setState = {
+                Email: '',
+                Password: '',
+                FirstName: '',
+                LastName: '',
+                Address: '',
+            }
+        })
+    }
     componentDidMount() {
 
 
@@ -36,7 +48,7 @@ class ModalUser extends Component {
         }
         return true;
     }
-    handleAddNewUser = (dataUser) => {
+    handleAddNewUser = () => {
         if (this.validateData()) {
             this.props.createNewUser(this.state)
         }
@@ -60,15 +72,16 @@ class ModalUser extends Component {
     }
     render() {
         return (
-            <div>
-                <Modal isOpen={this.props.OpenCloseModal} toggle={() => { this.toggle() }} >
-                    <ModalHeader toggle={() => { this.toggle() }} >Modal title</ModalHeader>
-                    <ModalBody  >
-                        <div className='container'>
+
+            <Modal isOpen={this.props.OpenCloseModal} toggle={() => { this.toggle() }} >
+                <ModalHeader toggle={() => { this.toggle() }} >Add a new user</ModalHeader>
+                <ModalBody  >
+                    <div className='container'>
+                        <form style={{ border: "none" }}>
                             <div className='row'>
                                 <div className='col-6 form-group'>
                                     <label>Email</label>
-                                    <input name="Email" type="email" onChange={(event) => this.handleInputChange(event)}
+                                    <input className='form-control' name="Email" type="email" onChange={(event) => this.handleInputChange(event)}
                                         value={this.state.Email}
                                     ></input>
                                 </div>
@@ -99,14 +112,17 @@ class ModalUser extends Component {
                                     value={this.state.Address}
                                 ></input>
                             </div>
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={() => this.handleAddNewUser()} >Add new</Button>{' '}
-                        <Button color="secondary" onClick={() => this.toggle()}>Close</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
+                            <Button type='submit' color="primary" onClick={() => this.handleAddNewUser()} >Add new</Button>{' '}
+                            <Button color="secondary" onClick={() => this.toggle()}>Close</Button>
+                        </form>
+
+                    </div>
+                </ModalBody>
+                <ModalFooter>
+
+                </ModalFooter>
+            </Modal>
+
         )
     }
 
